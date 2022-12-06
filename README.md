@@ -1,4 +1,4 @@
-## Monitoramento Suricata
+##  Suricata monitoring
 `tail -f /var/log/suricata/eve.json | jq -r -c 'select(.event_type=="alert")'`
 
 ## Target specification:
@@ -52,77 +52,84 @@ Ex:
 ```
 
 ## Port scanning
--A remote OS detection
--p0- scan all ports
--sS TCP Syn stealth
-           -sT TCP Connect
-           -sU UDP
-           -sF TCP FIN
-           -sX TCP XMASS
-           -sN TCP NULL
-           -sA TCP Ack - map firewall rulesets
-           -sW TCP Window - like ACK, but detects openports agains some machines
-           -sM Maimon - firewall-evading similar to FIN, works with a few systems
-           -sI TCP Idle
-           -sO -p <protocol> - Protocol scan
+By default scans the most popular 1.000 ports of the specified protocol.
 
-           By default scans the most popular 1.000 ports of the specified protocol.
-           -F (fast) - scans only 100 most popular ports.
-           --top-ports <num> - specify number
-           -p <list of ports> (pg. 84)
-           -T0 Very slow | -T5 extremely aggressive
+* -A remote OS detection
+* -p0- scan all ports
+* -sS TCP Syn stealth
+* -sT TCP Connect
+* -sU UDP
+* -sF TCP FIN
+* -sX TCP XMASS
+* -sN TCP NULL
+* -sA TCP Ack - map firewall rulesets
+* -sW TCP Window - like ACK, but detects openports agains some machines
+* -sM Maimon - firewall-evading similar to FIN, works with a few systems
+*-sI TCP Idle
+* -sO -p <protocol> - Protocol scan
+* -F (fast) - scans only 100 most popular ports.
+* --top-ports <num> - specify number
+* k-p <list of ports> (pg. 84)
+* -T0 Very slow | -T5 extremely aggressive
+  
+```
+Ex: 
+  nmap -T4 -PN -p80 --max-rtt-timeout 200 --initial-rtt-timeout 150 --min-hostgroup 512 -oG losg/openport80-%D.gmap 200.1.10.0/24
+     %D - Numeric date
 
-           ex: nmap -T4 -PN -p80 --max-rtt-timeout 200 --initial-rtt-timeout 150 --min-hostgroup 512 -oG losg/openport80-%D.gmap 200.1.10.0/24
-           %D - Numeric date
+  ```
+## Version detection
+* -sV
+* -A - Advanced and aggressive features
 
-       Version detection
-           -sV
-           -A - Advanced and aggressive features
-           nmap -sV --scan-delay 1 -sT -p<portas>
+```  
+Ex:
+nmap -sV --scan-delay 1 -sT -p<ports>
+```
 
-       OS detection
-           -O
-           -v - verbose
+## OS detection
+* -O
+* -v - verbose
 
-       Traceroute
-           --traceroute
-       Script scanning
-           -sC
-           --script - to specify a custom set os scripts
-           --script-args - arguments to scripts
-           --script-trace - debug script
+## Traceroute
+* --traceroute
+  
+## Script scanning
+* -sC
+* --script - to specify a custom set os scripts
+* --script-args - arguments to scripts
+* --script-trace - debug script
 
-           ex: nmap -sC --script-args user=foo,pass=sapeca,whois={whodb=nofollow+ripe}
-               nmap --script=./showSSHVersion --script-trace example.com
-               nmap --script=mycuston,safe,discovery example.com
-
-           Usar:
-           Bypass Snort
-               Connect Scan: -sT
-               Apenas uma porta: -p80 ou -p443
-           Bypass Suricata
-               Alterar user-agent
-               Alterar strings 'sqlspider' no script
-
-           nmap --scan-delay 1 -sT -p80 --script=http-sql-injection 192.168.0.1 --script-args http.useragent="Mozilla/5.0"
-           Categories:
-               auth
-               default
-               discovery
-               external
-               intrusive
-               malware
-               safe
-               version
-               vuln
-       Subverting Firewalls and IDSs
-           pg 260.
-
-OS detection
-   - Nmap
-Service detection
-   - Nmap
-   - Scripts NSE somente em portas interessantes
-   - WPScan
-       wpscan --url https://200.183.138.72 --rua --force --disable-tls-checks
-       wpscan --api-token "ePoBey1IhmHDvkaDkLbHLmIof7M0omaQk1urniXv2xg" --url https://brandbook.pixeon.com --rua --force -v -e -o targets/pixeon/brandbook.pixeon.com/brandbook.pixeon.com.wpscan -f cli
+```
+Ex:
+nmap -sC --script-args user=foo,pass=sapeca,whois={whodb=nofollow+ripe}
+nmap --script=./showSSHVersion --script-trace example.com
+nmap --script=mycuston,safe,discovery example.com
+```
+  
+Categories
+* auth
+* default
+* discovery
+* external
+* intrusive
+* malware
+* safe
+* version
+* vuln
+  
+Bypass Snort
+* Connect Scan: -sT
+* Apenas uma porta: -p80 ou -p443
+  
+Bypass Suricata
+* Alterar user-agent
+* Alterar strings 'sqlspider' no script
+  
+```
+Ex:
+nmap --scan-delay 1 -sT -p80 --script=http-sql-injection 192.168.0.1 --script-args http.useragent="Mozilla/5.0"
+```
+  
+## Subverting Firewalls and IDSs
+* pg 260. Nmap Network Scanning
