@@ -104,7 +104,7 @@ nmap -sV --scan-delay 1 -sT -p<ports>
 Ex:
 nmap -sC --script-args user=foo,pass=sapeca,whois={whodb=nofollow+ripe}
 nmap --script=./showSSHVersion --script-trace example.com
-nmap --script=mycuston,safe,discovery example.com
+nmap --script=mycustom,safe,discovery example.com
 ```
   
 Categories
