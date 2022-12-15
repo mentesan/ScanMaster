@@ -125,8 +125,8 @@ Bypass Snort
 * Apenas uma porta: -p80 ou -p443
   
 Bypass Suricata
-* Alterar user-agent
-* Alterar strings 'sqlspider' no script
+* Change user-agent
+* Change strings like 'sqlspider' on script
   
 ```
 Ex:
