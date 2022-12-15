@@ -10,7 +10,7 @@
 
 ## Reverse DNS resolution
 * -n no resolution
-* -R resolve eve down hosts
+* -R resolve even down hosts
 
 
 ## Ping Sweep
