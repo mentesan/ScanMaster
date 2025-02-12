@@ -16,10 +16,10 @@
 ## Ping Sweep
 
 * nmap -sn <target>
-* masscan -pU:5060-5061 --ping --banners --open-only --source-ip <any ip address>
+* masscan -pU:5060-5061 --ping --banners --open-only --source-ip 192.168.255.255
   
 ## Banner Grabbing
-* masscan -p1-65535 --banners --http-user-agent "Mozilla/5.0 Firefox/42.0" --open-only 192.168.0.1 --source-ip <any ip address>
+* masscan -p1-65535 --banners --http-user-agent "Mozilla/5.0 Firefox/42.0" --open-only 192.168.0.1 --source-ip 192.168.255.255
 
 ## General options
 * -sL list targets to confirm ip addresses
